@@ -1,11 +1,13 @@
-Introduzione
+**Introduzione**
+
 Una funzione crittografica di hash associa a dati di lunghezza arbitraria (messaggio) una sequenza binaria di dimensione fissa. Questo valore di hash viene spesso indicato anche con il termine message digest (o digest). Una funzione crittografica di hash è progettata per essere unidirezionale (one-way), ossia una funzione difficile da invertire: l'unico modo per ricreare i dati di input dall'output di una funzione di hash ideale è quello di tentare una ricerca di forza-bruta di possibili input per vedere se vi è corrispondenza (match).
 
-Con SHA (Secure Hash Algorithm) si indica una famiglia di funzioni crittografiche di hash sviluppate a partire dal 1993 dalla National Security Agency (NSA). Gli algoritmi della famiglia sono denominati SHA-1, SHA-224, SHA-256, SHA-384 e SHA-512: le ultime 4 varianti sono spesso indicate genericamente come SHA-2, per distinguerle dal primo. Il primo produce un digest del messaggio di soli 160 bit, mentre gli altri producono digest di lunghezza in bit pari al numero indicato nella loro sigla (ad esempio SHA-256 produce un digest di 256 bit). Nelle GNU Core Utilities sono disponibili i programmi (da shell) sha1sum, sha224sum, sha256sum, sha384sum e sha512sum che consentono di calcolare (e verificare) il digest associato ad un file. Una descrizione (con pseudocodice) degli algoritmi SHA sono disponibili ai seguenti link: link1, link2.
+Con **SHA** (Secure Hash Algorithm) si indica una famiglia di funzioni crittografiche di hash sviluppate a partire dal 1993 dalla National Security Agency (NSA). Gli algoritmi della famiglia sono denominati SHA-1, SHA-224, SHA-256, SHA-384 e SHA-512: le ultime 4 varianti sono spesso indicate genericamente come SHA-2, per distinguerle dal primo. Il primo produce un digest del messaggio di soli 160 bit, mentre gli altri producono digest di lunghezza in bit pari al numero indicato nella loro sigla (ad esempio SHA-256 produce un digest di 256 bit). Nelle GNU Core Utilities sono disponibili i programmi (da shell) sha1sum, sha224sum, sha256sum, sha384sum e sha512sum che consentono di calcolare (e verificare) il digest associato ad un file. Una descrizione (con pseudocodice) degli algoritmi SHA sono disponibili ai seguenti link: link1, link2.
 
 Non è possibile usare librerie C (o richiamare applicazioni) che computino i valori sha
 
-Descrizione
+**Descrizione**
+
 Nel progetto occorre sviluppare l'applicazione shadb che consente di archiviare i valori dei digest associati ai diversi file in un file apposito allo scopo di verificare se un dato file è già presente o meno nel proprio archivio. Le informazioni raccolte dal programma vengono salvate all'interno di un file la cui struttura è la seguente:
 
 <absolutepathtoafile_1>\r\n
@@ -31,7 +33,8 @@ Se non sono presenti altri file nell'archivio con il medesimo valore di hash l'i
 Se un file è già presente nel repository viene stampato a video un messaggio di errore (inviato su stderr).
 E' importante osservare che il parametro <pathtoafile> può essere un path relativo, mentre quello salvato nel repository deve essere un path assoluto.
 
-Esempio
+**Esempio**
+  
 Consideriamo ad esempio il file lorem.txt accessibile con path assoluto /home/utente/lorem.txt il cui contenuto è il seguente:
 
 Lorem ipsum dolor sit amet, consectetur adipisci elit, sed do eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrum exercitationem ullamco laboriosam, nisi ut aliquid ex ea commodi consequatur. Duis aute irure reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
