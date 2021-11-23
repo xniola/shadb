@@ -4,7 +4,6 @@ Una funzione crittografica di hash associa a dati di lunghezza arbitraria (messa
 
 Con **SHA** (Secure Hash Algorithm) si indica una famiglia di funzioni crittografiche di hash sviluppate a partire dal 1993 dalla National Security Agency (NSA). Gli algoritmi della famiglia sono denominati SHA-1, SHA-224, SHA-256, SHA-384 e SHA-512: le ultime 4 varianti sono spesso indicate genericamente come SHA-2, per distinguerle dal primo. Il primo produce un digest del messaggio di soli 160 bit, mentre gli altri producono digest di lunghezza in bit pari al numero indicato nella loro sigla (ad esempio SHA-256 produce un digest di 256 bit). Nelle GNU Core Utilities sono disponibili i programmi (da shell) sha1sum, sha224sum, sha256sum, sha384sum e sha512sum che consentono di calcolare (e verificare) il digest associato ad un file. Una descrizione (con pseudocodice) degli algoritmi SHA sono disponibili ai seguenti link: link1, link2.
 
-Non è possibile usare librerie C (o richiamare applicazioni) che computino i valori sha
 
 **Descrizione**
 
