@@ -16,6 +16,7 @@ Nel progetto occorre sviluppare l'applicazione shadb che consente di archiviare 
 <absolutepathtoafile_n>\r\n
 <shacode_n>\r\n
 <digest_n>\r\n
+
 Il file di archivio contiene una sequenza (possibilmente vuota) delle informazioni raccolte durante le varie esecuzioni, dove per ogni file viene memorizzato:
 
 il path assoluto al file (<absolutepathtoafile_n>);
@@ -45,6 +46,7 @@ Ne file sahdb.out (che assumiamo non aver indicizzato nessun file con analogo co
 /home/utente/loretm.txt\r\n
 SHA1\r\n
 e30e23b314c61b150ff5202d5aa30f87911893d1\r\n
+
 Ricerca
 Per verificare se un file è già presente nel repository occorre invocare shadb con i seguenti parametri:
 
