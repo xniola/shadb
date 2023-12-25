@@ -1,13 +1,13 @@
-**Introduzione**
+**Introduction**
 
-Una funzione crittografica di hash associa a dati di lunghezza arbitraria (messaggio) una sequenza binaria di dimensione fissa. Questo valore di hash viene spesso indicato anche con il termine message digest (o digest). Una funzione crittografica di hash è progettata per essere unidirezionale (one-way), ossia una funzione difficile da invertire: l'unico modo per ricreare i dati di input dall'output di una funzione di hash ideale è quello di tentare una ricerca di forza-bruta di possibili input per vedere se vi è corrispondenza (match).
+A cryptographic hash function associates data of arbitrary length (message) with a binary sequence of fixed size. This hash value is also often referred to as a message digest (or digest). A cryptographic hash function is designed to be unidirectional (one-way), i.e., a function that is difficult to reverse: the only way to recreate the input data from the output of an ideal hash function is to attempt a force-brute search of possible inputs to see if there is a match (match).
 
-Con **SHA** (Secure Hash Algorithm) si indica una famiglia di funzioni crittografiche di hash sviluppate a partire dal 1993 dalla National Security Agency (NSA). Gli algoritmi della famiglia sono denominati SHA-1, SHA-224, SHA-256, SHA-384 e SHA-512: le ultime 4 varianti sono spesso indicate genericamente come SHA-2, per distinguerle dal primo. Il primo produce un digest del messaggio di soli 160 bit, mentre gli altri producono digest di lunghezza in bit pari al numero indicato nella loro sigla (ad esempio SHA-256 produce un digest di 256 bit). Nelle GNU Core Utilities sono disponibili i programmi (da shell) sha1sum, sha224sum, sha256sum, sha384sum e sha512sum che consentono di calcolare (e verificare) il digest associato ad un file. Una descrizione (con pseudocodice) degli algoritmi SHA sono disponibili ai seguenti link: link1, link2.
+**SHA** (Secure Hash Algorithm) refers to a family of cryptographic hash functions developed since 1993 by the National Security Agency (NSA). The algorithms in the family are referred to as SHA-1, SHA-224, SHA-256, SHA-384, and SHA-512: the last 4 variants are often referred to generically as SHA-2, to distinguish them from the former. The former produces a message digest of only 160 bits, while the others produce digests of length in bits equal to the number indicated in their abbreviation (e.g. SHA-256 produces a 256-bit digest). Available in the GNU Core Utilities are the programs (from the shell) sha1sum, sha224sum, sha256sum, sha384sum, and sha512sum that allow you to calculate (and verify) the digest associated with a file. A description (with pseudocode) of the SHA algorithms are available at the following links: link1, link2.
 
 
-**Descrizione**
+**Description**
 
-Nel progetto occorre sviluppare l'applicazione shadb che consente di archiviare i valori dei digest associati ai diversi file in un file apposito allo scopo di verificare se un dato file è già presente o meno nel proprio archivio. Le informazioni raccolte dal programma vengono salvate all'interno di un file la cui struttura è la seguente:
+In the project, the shadb application needs to be developed to store the digest values associated with different files in a special file for the purpose of checking whether or not a given file is already present in its archive. The information collected by the program is stored within a file whose structure is as follows:
 
 <absolutepathtoafile_1>\r\n
 <shacode_1>\r\n
@@ -17,42 +17,39 @@ Nel progetto occorre sviluppare l'applicazione shadb che consente di archiviare 
 <shacode_n>\r\n
 <digest_n>\r\n
 
-Il file di archivio contiene una sequenza (possibilmente vuota) delle informazioni raccolte durante le varie esecuzioni, dove per ogni file viene memorizzato:
+The archive file contains a sequence (possibly empty) of the information collected during the various runs, where for each file is stored:
 
-il path assoluto al file (<absolutepathtoafile_n>);
-la funzione SHA usata per calcolare il digest (<shacode_n> che può assumere i valori SHA1, SHA224, SHA256, SHA384, o SHA512);
-il valore del digest associato al file (<digest_n>).
-Aggiunta di Informazioni
-Per aggiungere informazioni al repository, occorrerà invocare shadb con i seguenti parametri:
+the absolute path to the file (<absolutepathtoafile_n>);
+the SHA function used to calculate the digest (<shacode_n> which can take the values SHA1, SHA224, SHA256, SHA384, or SHA512);
+the digest value associated with the file (<digest_n>).
+Adding Information
+To add information to the repository, you will need to invoke shadb with the following parameters:
 
 shadb [--dbfile|-d <dbfile>] add [SHA1|SHA224|SHA256|SHA384|SHA512] <pathtoafile> 
-il parametro (opzionale) <dbfile> indica il file dove viene salvato il repository. Se omesso viene utilizzato il file sahdb.out. A seguito di questa invocazione il programma:
+the (optional) <dbfile> parameter indicates the file where the repository is saved. If omitted, the file sahdb.out is used. Following this invocation the program 
+will calculate the digest associated with the contents of the <pathtoafile> file using the algorithm passed as a parameter (if omitted, SHA1 will be used);
+If there are no other files in the repository with the same hash value the information is added to the repository;
+If a file is already present in the repository an error message is printed on the screen (sent on stderr).
+It is important to note that the <pathtoafile> parameter can be a relative path, while the one saved in the repository must be an absolute path.
 
-Calcolerà il digest associato al contenuto del file <pathtoafile> usando l'algoritmo passato come parametro (se omesso, verrà usato SHA1);
-Se non sono presenti altri file nell'archivio con il medesimo valore di hash l'informazione viene aggiunta nel repository;
-Se un file è già presente nel repository viene stampato a video un messaggio di errore (inviato su stderr).
-E' importante osservare che il parametro <pathtoafile> può essere un path relativo, mentre quello salvato nel repository deve essere un path assoluto.
-
-**Esempio**
+**Example**
   
-Consideriamo ad esempio il file lorem.txt accessibile con path assoluto /home/utente/lorem.txt il cui contenuto è il seguente:
+Consider, for example, the file lorem.txt accessed with absolute path /home/user/lorem.txt whose contents are as follows:
 
 Lorem ipsum dolor sit amet, consectetur adipisci elit, sed do eiusmod tempor incidunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrum exercitationem ullamco laboriosam, nisi ut aliquid ex ea commodi consequatur. Duis aute irure reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint obcaecat cupiditat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-Supponiamo che che venga invocato da shell il programma shadb all'interno della directory /home/utente/ con i seguenti parametri:
+Suppose that the shadb program within the /home/user/ directory is invoked from the shell with the following parameters:
 
 shadb add SHA1 ./lorem.txt 
-Ne file sahdb.out (che assumiamo non aver indicizzato nessun file con analogo contenuto) verrà aggiunta la seguente porzione di dati:
+The following portion of data will be added to the sahdb.out file (which we assume has no indexed file with similar content):
 
-/home/utente/loretm.txt\r\n
+/home/user/loretm.txt\r\n
 SHA1\r\n
 e30e23b314c61b150ff5202d5aa30f87911893d1\r\n
 
-Ricerca
-Per verificare se un file è già presente nel repository occorre invocare shadb con i seguenti parametri:
+Search
+To check whether a file is already in the repository, shadb must be invoked with the following parameters:
 
-shadb [--dbfile|-d <dbfile>] find [SHA1|SHA224|SHA256|SHA384|SHA512] <pathtoafile> 
-Anche in questo caso i parametri opzionali avranno come valore di default sahdb.out (per il file del repository) e SHA1 per l'algoritmo di codifica. Una volta invocato il programma:
-
-Calcolerà il digest associato al file <pathtoafile> usando l'algoritmo passato come parametro (se omesso, verrà usato SHA1);
-Viene stampato sullo standard output il file assoluto del file con il medesimo hash calcolato (se esiste);
-Se tale file non esiste, viene stampato sullo standard error un messaggio di errore.
+shadb [--dbfile|-d <dbfile>] find [SHA1|SHA224|SHA256|SHA384|SHA512] <pathtoafile>. 
+Again, the optional parameters will default to sahdb.out (for the repository file) and SHA1 for the encryption algorithm. Once the program is invoked will calculate the digest associated with the <pathtoafile> file using the algorithm passed as a parameter (if omitted, SHA1 will be used);
+The absolute file of the file with the same calculated hash (if it exists) is printed on the standard output;
+If such a file does not exist, an error message is printed on the standard error.
